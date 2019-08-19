@@ -1,4 +1,5 @@
 import React from 'react' ;
+import { Link } from 'react-router-dom'
 
 const ContactsTableRow = ({item,titles}) => {
 
@@ -6,10 +7,12 @@ const ContactsTableRow = ({item,titles}) => {
   return (
     <div style = {styles.container}>
         <div style = {styles.btn}> - </div>
-        <div style = {styles.btn}> * </div>
+        <Link to = {{pathname : 'form', query : {item} }}>
+          <div style = {styles.btn}> * </div>
+        </Link>
         {
           titles.map(title => (
-            <p key = {title}>{item[title]}</p>
+            <p key = {title} style = {styles.cell}>{item[title]}</p>
           ))
         }
 
@@ -26,7 +29,11 @@ const styles = {
     padding : 10,
     alignItems :'center'
   },
+  cell : {
+    width : '15%',
+    textAlign : 'center',
 
+  },
   btn : {
     background : "#F5F5F5" ,
     //color : "#fff" ,
@@ -38,6 +45,7 @@ const styles = {
     alignItems: 'center' ,
     justifyContent : 'center',
     padding : 5,
+    cursor : 'pointer'
 
 
   }

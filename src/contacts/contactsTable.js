@@ -48,7 +48,7 @@ class ContactsTable extends Component {
 
         <div style = {styles.tableHeader}>
           <h3>{title}</h3>
-          <button style = {styles.add}> + </button>
+          <button style = {styles.add} onClick = {() => this.props.history.push('/form')}> + </button>
         </div>
 
         <div style = {styles.titles}>
@@ -64,6 +64,7 @@ class ContactsTable extends Component {
               <ContactsTableRow
                 item = {item}
                 titles = {columns}
+                key = {item.id}
               />
             ))
           }
