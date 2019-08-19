@@ -1,10 +1,10 @@
 import React, { Component } from 'react' ;
 import { ContactsTable } from '../contacts' ;
 import { Link } from 'react-router-dom' ;
-import { getRequest } from '../funcs/http' ;
+import { getRequest,deleteRequest } from '../funcs/http' ;
 
 
-const columns = ['id','firstname','lastname','email','phone','address'] ;
+const columns = ['id','firstname','lastname','email','phone','addresses'] ;
 
 class Contacts extends Component {
 
@@ -16,6 +16,8 @@ class Contacts extends Component {
       this.setState({data : resp.data})
     })
   }
+
+
 
 
   render = () => {
@@ -41,6 +43,7 @@ class Contacts extends Component {
               pagination = { 5 }
               title = 'Contacts'
               history = { this.props.history }
+
             />
           </div>
         }

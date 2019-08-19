@@ -33,6 +33,7 @@ class ContactsTable extends Component {
   }
 
 
+
   render = () => {
     const { title, columns,data,pagination } = this.props ;
     let block ; // block of data to be displayed
@@ -40,7 +41,7 @@ class ContactsTable extends Component {
     if (pagination <= 0 ||  ! pagination) {
      block = data ;
     } else {
-      block = [...data.slice(this.state.index ,this.state.index + pagination)]
+      block = [...data.slice(this.state.index ,this.state.index + pagination)] ;
     }
 
     return (
@@ -51,11 +52,6 @@ class ContactsTable extends Component {
           <button style = {styles.add} onClick = {() => this.props.history.push('/form')}> + </button>
         </div>
 
-        <div style = {styles.titles}>
-          {
-            //columns.map(title => <p>{title}</p>)
-          }
-        </div>
 
         <div style = {styles.tableBody}>
           {
@@ -65,6 +61,8 @@ class ContactsTable extends Component {
                 item = {item}
                 titles = {columns}
                 key = {item.id}
+                deleteItem = {this.props.deleteItem}
+                index = { index }
               />
             ))
           }
@@ -129,12 +127,6 @@ const styles = {
     display : "flex"
   },
 
-  titles : {
-    display : 'flex',
-    justifyContent : 'space-around',
-    padding : "0 50px",
-
-  },
   btn : {
     border : 'none',
     padding : 20 ,

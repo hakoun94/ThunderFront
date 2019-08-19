@@ -1,19 +1,21 @@
 import React from 'react' ;
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'  ;
 
-const ContactsTableRow = ({item,titles}) => {
 
+const ContactsTableRow = ({item,titles,index}) => {
 
   return (
     <div style = {styles.container}>
-        <div style = {styles.btn}> - </div>
+
         <Link to = {{pathname : 'form', query : {item} }}>
           <div style = {styles.btn}> * </div>
         </Link>
         {
-          titles.map(title => (
-            <p key = {title} style = {styles.cell}>{item[title]}</p>
-          ))
+          titles.map(title => {
+            return <p key = {title} style = {styles.cell}>{item[title] ? item[title] : '-'}</p>
+          })
+
+
         }
 
     </div>
@@ -32,7 +34,6 @@ const styles = {
   cell : {
     width : '15%',
     textAlign : 'center',
-
   },
   btn : {
     background : "#F5F5F5" ,

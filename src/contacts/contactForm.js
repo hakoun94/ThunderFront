@@ -1,5 +1,5 @@
 import React, { Component } from 'react' ;
-import { request } from '../funcs/http' ;
+import { request,deleteRequest } from '../funcs/http' ;
 
 class ContactForm extends Component {
 
@@ -10,6 +10,13 @@ class ContactForm extends Component {
     addresses : '' ,
     phone : '' ,
     buttonDisabled : false ,
+  }
+
+  onDeleteClick = () => {
+    const { item } = this.props.location.query ;
+    deleteRequest(`contacts/${item.id}`).then(resp => {
+      this.props.history.push('/')
+    })
   }
 
 
@@ -25,7 +32,7 @@ class ContactForm extends Component {
     const url = method === 'PUT' ? `contacts/${this.props.location.query.item.id}` : 'contacts'
     request(url,{...this.state},method).then(resp => {
       this.setState({buttonDisabled : false }) ;
-      this.props.history.push('/') ; 
+      this.props.history.push('/') ;
     })
 
   }
@@ -44,7 +51,14 @@ class ContactForm extends Component {
     return (
       <div style = {styles.container}>
 
-        <div style = {styles.formHeader}>Contact Form</div>
+        <div style = {styles.formHeader}>
+          Contact Form
+          {
+            this.props.location.query &&
+            <div style = {styles.deleteBtn} onClick = {this.onDeleteClick}>Delete</div>
+          }
+
+        </div>
         <form style = {styles.form}>
 
           <div style = {styles.inputWrapper}>
@@ -133,7 +147,7 @@ const styles = {
     padding : 5 ,
     display : 'flex' ,
     alignItems : 'center' ,
-    justifyContent : 'center',
+    justifyContent : 'space-between',
     borderBottom : 'solid 1px #ddd'
   },
   inputWrapper : {
@@ -158,6 +172,13 @@ const styles = {
     background : "#ff4fa1",
     border : "none",
     width : '90%'
+  },
+  deleteBtn : {
+    background : "#444" ,
+    color : "#fff",
+    padding : 10,
+    borderRadius : 6,
+    cursor : 'pointer'
   }
 }
 export default ContactForm ;

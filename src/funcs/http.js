@@ -10,7 +10,7 @@ const getRequest = (url) => {
 
 // for both Put , Post request
 const request = (url, payload ,type = 'post') => {
-  
+
   const { baseUrl } = configs ;
   const dest = baseUrl + '/' + url ;
   return axios({
@@ -20,7 +20,19 @@ const request = (url, payload ,type = 'post') => {
   })
 }
 
+const deleteRequest =  (url) => {
+  const { baseUrl } = configs ;
+  const dest = baseUrl + '/' + url ;
+  return axios({
+    method : 'DELETE' ,
+    url : dest ,
+  })
+}
+
+
+
 export {
   getRequest ,
-  request
+  request,
+  deleteRequest ,
 }
