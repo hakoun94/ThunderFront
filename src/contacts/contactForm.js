@@ -10,31 +10,50 @@ class ContactForm extends Component {
     addresses : '' ,
     phone : '' ,
     buttonDisabled : false ,
+    showError : false ,
   }
 
   onDeleteClick = () => {
     const { item } = this.props.location.query ;
     deleteRequest(`contacts/${item.id}`).then(resp => {
-      this.props.history.push('/')
+      this.props.history.push('/') ;
     })
   }
 
 
+  // validate user inputs before submitting data
+  validate = () => {
+    let i = 0 ;
+    let isValid = true ;
+    const keys = Object.keys({...this.state}) ;
+
+    for (i ; i < keys.length ; i++) {
+      const value = keys[i] ;
+      if (this.state[value] === '' || this.state[value] === null) { isValid = false ; break }
+
+    }
+    return isValid ;
+  }
+
   // when user clicks submit button
   onSubmit = (e) => {
     e.preventDefault() ;
-    this.setState({buttonDisabled : true}) ;
+    const isValid = this.validate() ;
+    if (isValid) {
+      this.setState({buttonDisabled : true}) ;
 
-    //decide request method (post or put)
-    const method = this.props.location.query ? 'PUT' : 'POST' ;
+      //decide request method (post or put)
+      const method = this.props.location.query ? 'PUT' : 'POST' ;
 
-    //decide request url based on request method type
-    const url = method === 'PUT' ? `contacts/${this.props.location.query.item.id}` : 'contacts'
-    request(url,{...this.state},method).then(resp => {
-      this.setState({buttonDisabled : false }) ;
-      this.props.history.push('/') ;
-    })
-
+      //decide request url based on request method type
+      const url = method === 'PUT' ? `contacts/${this.props.location.query.item.id}` : 'contacts'
+      request(url,{...this.state},method).then(resp => {
+        this.setState({buttonDisabled : false }) ;
+        this.props.history.push('/') ;
+      })
+    } else {
+      this.setState({showError : true})
+    }
   }
 
   // change the content for inputs (while user is typing )
@@ -62,6 +81,7 @@ class ContactForm extends Component {
         <form style = {styles.form}>
 
           <div style = {styles.inputWrapper}>
+            {this.state.showError && <span style ={{color : "red"}}> * </span>}
             <p>Firstname</p>
             <input
               type = 'text'
@@ -73,6 +93,7 @@ class ContactForm extends Component {
           </div>
 
           <div style = {styles.inputWrapper}>
+            {this.state.showError && <span style ={{color : "red"}}> * </span>}
             <p>Lastname</p>
             <input
               type = 'text'
@@ -84,6 +105,7 @@ class ContactForm extends Component {
           </div>
 
           <div style = {styles.inputWrapper}>
+            {this.state.showError && <span style ={{color : "red"}}> * </span>}
             <p>Email</p>
             <input
               type = 'email'
@@ -95,6 +117,7 @@ class ContactForm extends Component {
           </div>
 
           <div style = {styles.inputWrapper}>
+            {this.state.showError && <span style ={{color : "red"}}> * </span>}
             <p>Phone</p>
             <input
               type = 'text'
@@ -106,6 +129,7 @@ class ContactForm extends Component {
           </div>
 
           <div style = {styles.inputWrapper}>
+            {this.state.showError && <span style ={{color : "red"}}> * </span>}
             <p>Address</p>
             <input
               type = 'text'

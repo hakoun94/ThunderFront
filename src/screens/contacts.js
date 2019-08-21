@@ -1,7 +1,7 @@
 import React, { Component } from 'react' ;
 import { ContactsTable } from '../contacts' ;
 import { Link } from 'react-router-dom' ;
-import { getRequest,deleteRequest } from '../funcs/http' ;
+import { getRequest } from '../funcs/http' ;
 
 
 const columns = ['id','firstname','lastname','email','phone','addresses'] ;
